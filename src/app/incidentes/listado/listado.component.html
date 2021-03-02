@@ -1,0 +1,16 @@
+<table class="table table-striped">
+  <thead>
+    <th>Cliente</th>
+    <th>Fecha incidente</th>
+    <th>Cerrado</th>
+    <th>Acciones</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let incidente of incidentes" >
+      <td>{{ incidente.razon_social }}</td>
+      <td>{{ incidente.fecha_alta }}</td>
+      <td>{{ incidente.fecha_cerrado != null? 'Si' : 'No' }}</td>
+      <td>Ver</td>
+    </tr>
+  </tbody>
+</table>
