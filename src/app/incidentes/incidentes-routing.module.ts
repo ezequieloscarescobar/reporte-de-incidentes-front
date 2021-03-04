@@ -6,7 +6,8 @@ import { ListadoComponent } from './listado/listado.component';
 
 const routes: Routes = [
   { path: 'listado', component: ListadoComponent },
-  { path: 'nuevo', component: IncidenteComponent}
+  { path: 'nuevo', component: IncidenteComponent},
+  { path: ':id', component: IncidenteComponent }
 ];
 
 @NgModule({

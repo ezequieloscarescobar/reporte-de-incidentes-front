@@ -29,6 +29,14 @@ export class ApiService {
     return this.http.get(this.urlBack + 'tipos-de-problemas/' + tipoDeProblemaId + '/posibles-problemas');
   }
 
+  public buscarPosibleProblema(id: number|string) {
+    return this.http.get(this.urlBack + 'posibles-problemas/' + id);
+  }
+
+  public buscarTecnico(id: number|string) {
+    return this.http.get(this.urlBack + 'tecnicos/' + id);
+  }
+
   public tecnicosQueResuelvan(tipoDeProblemaId: number) {
     const params = new HttpParams()
       .set('tipo_problema_id', tipoDeProblemaId.toString());
@@ -41,5 +49,17 @@ export class ApiService {
 
   public guardarIncidente(incidente: any) {
     return this.http.post(this.urlBack + 'incidentes', incidente);
+  }
+
+  public buscarIndicente(id: number|string) {
+    return this.http.get(this.urlBack + 'incidentes/' + id);
+  }
+
+  public guardarCambioDeEstadoIncidente(id: number|string, parametros = {}) {
+    return this.http.put(this.urlBack + 'incidentes/' + id, parametros);
+  }
+
+  public buscarEstadosDeIncidentes() {
+    return this.http.get(this.urlBack + 'estados-de-incidentes');
   }
 }

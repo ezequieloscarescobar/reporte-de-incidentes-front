@@ -3,7 +3,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Razón Social</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Debe ingresar la Razón Social">
-      <input nz-input formControlName="razon_social" (change)='buscarServiciosDelCliente()' />
+      <input nz-input formControlName="razon_social" (change)='buscarServiciosDelCliente()'/>
     </nz-form-control>
   </nz-form-item>
 
@@ -57,7 +57,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item nz-row class="register-area">
+  <nz-form-item *ngIf="incidente == null"  nz-row class="register-area">
     <nz-form-control [nzSpan]="14" [nzOffset]="6">
       <button nz-button nzType="primary">Guardar</button>
     </nz-form-control>

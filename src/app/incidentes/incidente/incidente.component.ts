@@ -2,12 +2,14 @@ import { ApiService } from './../../api/api.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './incidente.component.html',
   styleUrls: ['./incidente.component.css']
 })
 export class IncidenteComponent implements OnInit {
+  incidente            = null;;
   formulario: FormGroup;
   private cliente: any = null;
   serviciosContratados = [];
@@ -18,12 +20,18 @@ export class IncidenteComponent implements OnInit {
   constructor(
     private builder: FormBuilder,
     private api: ApiService,
-    private mensajeService: NzMessageService
+    private mensajeService: NzMessageService,
+    private activatedRoute: ActivatedRoute
     ) { }
 
   ngOnInit(): void {
+    const idIncidente = this.activatedRoute.snapshot.params.id;
     this.inicializarFormulario();
     this.recuperarTiposDeProblema();
+    if(idIncidente != undefined && idIncidente != null){
+      this.recuperarIncidente(idIncidente);
+      this.deshabilitarFormulario();
+    }
   }
 
   private inicializarFormulario() {
@@ -36,6 +44,50 @@ export class IncidenteComponent implements OnInit {
       descripcion_del_problema:  [null, Validators.required],
       tecnico:                   [null, Validators.required],
     });
+  }
+
+  private deshabilitarFormulario() {
+    for (const i in this.formulario.controls) {
+      this.formulario.controls[i].disable();
+    }
+  }
+
+  private recuperarIncidente(idIncidente: number|string) {
+    this.api.buscarIndicente(idIncidente).subscribe((i: any) => {
+      this.incidente = i;
+      this.mostrarIncidente();
+      this.recuperarPosibleProblema(this.incidente.posible_problema_id);
+      this.recuperarTecnico(this.incidente.tecnico_id);
+    });
+  }
+
+  private recuperarPosibleProblema(id: number|string, mostrar = true) {
+    this.api.buscarPosibleProblema(id).subscribe((pp: any) => {
+      this.incidente.posible_problema = pp;
+      if(mostrar){
+        this.formulario.controls['tipo_problema'].setValue(pp.tipo_id);
+        this.formulario.controls['problema'].setValue(pp.id);
+        this.buscarPosiblesProblemas();
+        this.buscarPosiblesTecnicos();
+      }
+    });
+  }
+
+  private recuperarTecnico(id: number|string, mostrar = true) {
+    this.api.buscarTecnico(id).subscribe((t: any) => {
+      this.incidente.tecnico = t;
+      if(mostrar){
+        this.formulario.controls['tecnico'].setValue(t.id);
+      }
+    });
+  }
+
+  private mostrarIncidente() {
+    this.formulario.controls['razon_social'].setValue(this.incidente.razon_social);
+    this.formulario.controls['cuit'].setValue(this.incidente.cuit);
+    this.formulario.controls['servicio'].setValue(this.incidente.servicio_id);
+    this.formulario.controls['descripcion_del_problema'].setValue(this.incidente.descripcion_del_problema);
+    this.buscarServiciosDelCliente();
   }
 
   buscarServiciosDelCliente() {
