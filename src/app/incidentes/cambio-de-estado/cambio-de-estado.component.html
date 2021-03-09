@@ -1,0 +1,17 @@
+<div class="form-group">
+    <div class="form-group">
+      <label>Estado</label>
+      <select class="form-control"
+      [(ngModel)]="estadoSeleccionado"
+      [ngModelOptions]="{standalone: true}">
+        <option *ngFor="let estado of estados" [ngValue]='estado.id'>{{ estado.nombre}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Consideraciones</label>
+      <textarea class="form-control" [(ngModel)]="consideraciones"></textarea>
+    </div>
+    <div align='center'>
+      <button type="button" class="btn btn-primary" (click)="guardarYnotificarCambioDeEstado()">Aceptar</button>
+    </div>
+</div>

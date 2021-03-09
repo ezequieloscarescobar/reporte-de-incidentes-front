@@ -1,65 +1,79 @@
-<form nz-form [formGroup]="formulario" (ngSubmit)="guardar()">
+<div>
+  <form nz-form [formGroup]="formulario" (ngSubmit)="guardar()">
 
-  <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Razón Social</nz-form-label>
-    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Debe ingresar la Razón Social">
-      <input nz-input formControlName="razon_social" (change)='buscarServiciosDelCliente()'/>
-    </nz-form-control>
-  </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Razón Social</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Debe ingresar la Razón Social">
+        <input nz-input formControlName="razon_social" (change)='buscarServiciosDelCliente()'/>
+      </nz-form-control>
+    </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>CUIT</nz-form-label>
-    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Debe ingresar el CUIT">
-      <input nz-input formControlName="cuit" (change)='buscarServiciosDelCliente()' />
-    </nz-form-control>
-  </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>CUIT</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Debe ingresar el CUIT">
+        <input nz-input formControlName="cuit" (change)='buscarServiciosDelCliente()' />
+      </nz-form-control>
+    </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Servicio por el cual reclama</nz-form-label>
-    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Debe seleccionar un Servicio">
-      <nz-select formControlName="servicio">
-        <nz-option *ngFor="let servicio of serviciosContratados" [nzValue]='servicio.id' nzLabel="{{servicio.servicio_nombre}}"></nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Servicio por el cual reclama</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Debe seleccionar un Servicio">
+        <nz-select formControlName="servicio">
+          <nz-option *ngFor="let servicio of serviciosContratados" [nzValue]='servicio.id' nzLabel="{{servicio.servicio_nombre}}"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Tipo de problema</nz-form-label>
-    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Debe seleccionar un Tipo de Problema">
-      <nz-select formControlName="tipo_problema" (ngModelChange)='buscarPosiblesProblemas(); buscarPosiblesTecnicos()'>
-        <nz-option *ngFor="let tipoProblema of tiposDeProblema" [nzValue]='tipoProblema.id' nzLabel="{{ tipoProblema.nombre }}" ></nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Tipo de problema</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Debe seleccionar un Tipo de Problema">
+        <nz-select formControlName="tipo_problema" (ngModelChange)='buscarPosiblesProblemas(); buscarPosiblesTecnicos()'>
+          <nz-option *ngFor="let tipoProblema of tiposDeProblema" [nzValue]='tipoProblema.id' nzLabel="{{ tipoProblema.nombre }}" ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Problema</nz-form-label>
-    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Debe seleccionar un Problema">
-      <nz-select formControlName="problema">
-        <nz-option *ngFor="let posibleProblema of posiblesProblemas" [nzValue]='posibleProblema.id' nzLabel="{{ posibleProblema.nombre }}" ></nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Problema</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Debe seleccionar un Problema">
+        <nz-select formControlName="problema">
+          <nz-option *ngFor="let posibleProblema of posiblesProblemas" [nzValue]='posibleProblema.id' nzLabel="{{ posibleProblema.nombre }}" ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Descripción del problema</nz-form-label>
-    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Debe ingresar la descripción del problema">
-      <textarea rows="5" nz-input formControlName="descripcion_del_problema"></textarea>
-    </nz-form-control>
-  </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Descripción del problema</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Debe ingresar la descripción del problema">
+        <textarea rows="5" nz-input formControlName="descripcion_del_problema"></textarea>
+      </nz-form-control>
+    </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Técnicos disponibles</nz-form-label>
-    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Debe seleccionar un Técnico">
-      <nz-select formControlName="tecnico">
-        <nz-option *ngFor="let tecnico of tecnicos" [nzValue]='tecnico.id' nzLabel="{{ tecnico.nombre }} {{ tecnico.apellido }}"  ></nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Técnicos disponibles</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Debe seleccionar un Técnico">
+        <nz-select formControlName="tecnico">
+          <nz-option *ngFor="let tecnico of tecnicos" [nzValue]='tecnico.id' nzLabel="{{ tecnico.nombre }} {{ tecnico.apellido }}"  ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
 
-  <nz-form-item *ngIf="incidente == null"  nz-row class="register-area">
-    <nz-form-control [nzSpan]="14" [nzOffset]="6">
-      <button nz-button nzType="primary">Guardar</button>
-    </nz-form-control>
-  </nz-form-item>
-</form>
+    <nz-form-item *ngIf="incidente == null"  nz-row class="register-area">
+      <nz-form-control [nzSpan]="14" [nzOffset]="6">
+        <button nz-button nzType="primary">Guardar</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+  <div *ngIf="incidente != null">
+    <div>
+      <app-detalle-horario [incidenteObservable]='incidenteObservable'></app-detalle-horario>
+    </div>
+
+    <div>
+      <app-cambio-de-estado [incidente]='incidente' (cambioDeEstado)='cambiarEstado($event)'></app-cambio-de-estado>
+    </div>
+  </div>
+</div>
+
+

@@ -3,13 +3,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   templateUrl: './incidente.component.html',
   styleUrls: ['./incidente.component.css']
 })
 export class IncidenteComponent implements OnInit {
-  incidente            = null;;
+  incidente            = null;
+  incidenteObservable  = null;
   formulario: FormGroup;
   private cliente: any = null;
   serviciosContratados = [];
@@ -31,6 +33,8 @@ export class IncidenteComponent implements OnInit {
     if(idIncidente != undefined && idIncidente != null){
       this.recuperarIncidente(idIncidente);
       this.deshabilitarFormulario();
+      this.incidenteObservable = new BehaviorSubject(this.incidente);
+      this.incidenteObservable.next(this.incidente);
     }
   }
 
@@ -55,6 +59,7 @@ export class IncidenteComponent implements OnInit {
   private recuperarIncidente(idIncidente: number|string) {
     this.api.buscarIndicente(idIncidente).subscribe((i: any) => {
       this.incidente = i;
+      this.incidenteObservable.next(this.incidente);
       this.mostrarIncidente();
       this.recuperarPosibleProblema(this.incidente.posible_problema_id);
       this.recuperarTecnico(this.incidente.tecnico_id);
@@ -148,6 +153,12 @@ export class IncidenteComponent implements OnInit {
       }
       else this.mensajeService.error('Error al intentar guardar los cambios', {nzDuration: 5000});
     });
+  }
+
+  cambiarEstado(nuevoCambio: any) {
+    this.incidente.estado_id = nuevoCambio.estado_id;
+    this.incidente.consideraciones = nuevoCambio.consideraciones;
+    this.incidenteObservable.next(this.incidente);
   }
 
 }

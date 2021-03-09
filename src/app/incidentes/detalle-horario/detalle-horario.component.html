@@ -1,0 +1,6 @@
+<div class="form-group">
+  <p>El incidente fue dado de alta el día {{ incidente?.fecha_alta | date:'longDate':'':'es' }} y actualmente se encuentra <strong>{{ estadoIncidente?.nombre }}</strong>.</p>
+  <p *ngIf="estadoIncidente?.final">La fecha en la cual se cerró fue {{ incidente?.fecha_cerrado | date:'longDate':'':'es' }}</p>
+  <p *ngIf="!estadoIncidente?.final">El técnico ha especificado: "<i>{{ incidente?.consideraciones }}</i>"</p>
+  <p *ngIf="!estadoIncidente?.final">La fecha posible de resolución es {{ incidente?.posible_fecha_resolucion | date:'longDate':'':'es' }}.</p>
+</div>
